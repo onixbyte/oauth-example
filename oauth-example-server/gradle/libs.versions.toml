@@ -1,0 +1,10 @@
+[versions]
+devkit = "2.1.3"
+
+[libraries]
+devkit-bom = { group = "com.onixbyte", name = "devkit-bom", version.ref = "devkit" }
+devkit-core = { group = "com.onixbyte", name = "devkit-core", version.ref = "devkit" }
+devkit-utils = { group = "com.onixbyte", name = "devkit-utils", version.ref = "devkit" }
+devkit-simpleJwt-facade = { group = "com.onixbyte", name = "simple-jwt-facade", version.ref = "devkit" }
+devkit-simpleJwt-auth0 = { group = "com.onixbyte", name = "simple-jwt-authzero", version.ref = "devkit" }
+devkit-simpleJwt-springBootStarter = { group = "com.onixbyte", name = "simple-jwt-spring-boot-starter", version.ref = "devkit" }

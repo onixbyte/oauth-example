@@ -1,0 +1,11 @@
+logging:
+  pattern:
+    dateformat: dd MMM yyyy HH:mm:ss
+  level:
+    io.github.siujamo.playground.springbootplayground:
+      repository: debug
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
