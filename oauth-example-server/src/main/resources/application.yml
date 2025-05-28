@@ -2,7 +2,7 @@ logging:
   pattern:
     dateformat: dd MMM yyyy HH:mm:ss
   level:
-    io.github.siujamo.playground.springbootplayground:
+    com.onixbyte.cas:
       repository: debug
 
 mybatis:
