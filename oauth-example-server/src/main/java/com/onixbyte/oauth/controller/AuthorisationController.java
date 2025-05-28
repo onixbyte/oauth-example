@@ -23,30 +23,35 @@ public class AuthorisationController {
         this.msalService = msalService;
     }
 
+    /**
+     * Authorisation for Microsoft Entra ID.
+     *
+     * @param msalAuthoriseRequest authorisation request for Microsoft Entra ID
+     */
     @PostMapping("/msal")
     public void msalAuthorisation(@RequestBody MsalAuthoriseRequest msalAuthoriseRequest) {
         try {
-            // 1. 拿到前端发送的idToken
+            // get id token from frontend
             var idToken = msalAuthoriseRequest.idToken();
 
-            // 2. 解码JWT（不验证），获取header中的 kid
+            // decode JWT to retrieve kid in header
             var decodedJWT = JWT.decode(idToken);
             var keyId = decodedJWT.getKeyId();
             if (keyId == null) {
                 throw new RuntimeException("Token header missing key id.");
             }
 
-            // 3. 根据kid从Microsoft JWKS缓存中获取RSAPublicKey
+            // get RSAPublicKey from Microsoft JWKS cache according to kid
             var publicKey = msalService.getPublicKey(keyId);
 
-            // 4. 创建算法实例
+            // create algorithm instance
             var algorithm = Algorithm.RSA256(publicKey, null);
 
-            // 5. 创建验证器，校验issuer和aud
+            // create verifier and verify `issuer` and `aud`
             var verifier = JWT.require(algorithm)
-                    // 这里issuer的格式通常是：https://login.microsoftonline.com/{tenantId}/v2.0
+                    // format of the issuer is `https://login.microsoftonline.com/{tenantId}/v2.0`
                     .withIssuer("https://login.microsoftonline.com/" + msalService.getTenantId() + "/v2.0")
-                    // 你的应用的ClientId，作为audience
+                    // client id is used for audience
                     .withAudience(msalService.getClientId())
                     .build();
 
