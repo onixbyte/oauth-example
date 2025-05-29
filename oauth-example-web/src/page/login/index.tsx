@@ -29,9 +29,9 @@ export const Login = () => {
 
   return (
     <div>
-      <h1>登录</h1>
+      <h1>Login</h1>
       <button onClick={() => void handleMsalLogin()}>
-        使用 Microsoft Entra ID 登录
+        Login with Microsoft Entra ID
       </button>
     </div>
   )
