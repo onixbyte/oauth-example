@@ -24,21 +24,23 @@ repositories {
 }
 
 dependencies {
+    runtimeOnly(libs.dbDriver.pg)
     implementation(platform(libs.devkit.bom))
     implementation(libs.devkit.utils)
+    implementation(libs.devkit.guid)
     implementation(libs.devkit.simpleJwt.facade)
     implementation(libs.devkit.simpleJwt.auth0)
-    implementation(libs.devkit.simpleJwt.springBootStarter)
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4")
-    testImplementation("io.projectreactor:reactor-test")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    runtimeOnly("org.postgresql:postgresql")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation(libs.devkit.simpleJwt.starter)
+    implementation(libs.mybatisFlex.starter)
+    implementation(libs.springBoot.starter.web)
+    implementation(libs.springBoot.starter.webflux)
+    implementation(libs.springBoot.starter.redis)
+    implementation(libs.springBoot.starter.security)
+    annotationProcessor(libs.springBoot.core.configurationProcessor)
+    testImplementation(libs.test.reactor)
+    testImplementation(libs.test.springSecurity)
+    testImplementation(libs.test.springBoot)
+    testRuntimeOnly(libs.test.junit)
 }
 
 tasks.withType<Test> {

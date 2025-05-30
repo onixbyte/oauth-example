@@ -1,10 +1,29 @@
 [versions]
+postgres = "42.7.5"
 devkit = "2.1.3"
+mybatisFlex = "1.10.9"
+spring = "6.2.5"
+springBoot = "3.4.4"
+reactor = "3.7.4"
+junit = "5.11.4"
 
 [libraries]
+dbDriver-pg = { group = "org.postgresql", name = "postgresql", version.ref = "postgres" }
 devkit-bom = { group = "com.onixbyte", name = "devkit-bom", version.ref = "devkit" }
 devkit-core = { group = "com.onixbyte", name = "devkit-core", version.ref = "devkit" }
 devkit-utils = { group = "com.onixbyte", name = "devkit-utils", version.ref = "devkit" }
+devkit-guid = { group = "com.onixbyte", name = "guid", version.ref = "devkit" }
 devkit-simpleJwt-facade = { group = "com.onixbyte", name = "simple-jwt-facade", version.ref = "devkit" }
 devkit-simpleJwt-auth0 = { group = "com.onixbyte", name = "simple-jwt-authzero", version.ref = "devkit" }
-devkit-simpleJwt-springBootStarter = { group = "com.onixbyte", name = "simple-jwt-spring-boot-starter", version.ref = "devkit" }
+devkit-simpleJwt-starter = { group = "com.onixbyte", name = "simple-jwt-spring-boot-starter", version.ref = "devkit" }
+mybatisFlex-starter = { group = "com.mybatis-flex", name = "mybatis-flex-spring-boot3-starter", version.ref = "mybatisFlex" }
+springBoot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "springBoot" }
+springBoot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux", version.ref = "springBoot" }
+springBoot-starter-redis = { group = "org.springframework.boot", name = "spring-boot-starter-data-redis", version.ref = "springBoot" }
+springBoot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "springBoot" }
+springBoot-core-configurationProcessor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor", version.ref = "springBoot" }
+test-reactor = { group = "io.projectreactor", name = "reactor-test", version.ref = "reactor" }
+test-springBoot = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "springBoot" }
+test-springSecurity = { group = "org.springframework.security", name = "spring-security-test", version.ref = "springBoot" }
+test-junit = { group = "org.junit.platform", name = "junit-platform-launcher", version.ref = "junit" }
+
