@@ -1,8 +1,8 @@
 package com.onixbyte.oauth.data.cache;
 
 public record MsalCache(
-        String n,
-        String e
+        String modulus,
+        String exponent
 ) {
 
     public static MsalCacheBuilder builder() {
@@ -10,25 +10,25 @@ public record MsalCache(
     }
 
     public static class MsalCacheBuilder {
-        private String n;
+        private String modulus;
 
-        private String e;
+        private String exponent;
 
         private MsalCacheBuilder() {
         }
 
-        public MsalCacheBuilder withN(String n) {
-            this.n = n;
+        public MsalCacheBuilder withModulus(String modulus) {
+            this.modulus = modulus;
             return this;
         }
 
-        public MsalCacheBuilder withE(String e) {
-            this.e = e;
+        public MsalCacheBuilder withExponent(String exponent) {
+            this.exponent = exponent;
             return this;
         }
 
         public MsalCache build() {
-            return new MsalCache(n, e);
+            return new MsalCache(modulus, exponent);
         }
     }
 }

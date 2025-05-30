@@ -1,11 +1,13 @@
 package com.onixbyte.oauth.service;
 
 import com.onixbyte.oauth.data.cache.MsalCache;
+import com.onixbyte.oauth.data.response.MsalKeyResponse;
 import com.onixbyte.oauth.data.response.MsalKeysResponse;
 import com.onixbyte.oauth.properties.MsalProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,8 +20,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.time.Duration;
-import java.util.Base64;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Services for Microsoft Entra ID authorisations.
@@ -64,7 +66,7 @@ public class MsalService {
         var msalCache = msalRedisTemplate.opsForValue().get(CACHE_PREFIX + keyId);
         if (Objects.nonNull(msalCache)) {
             // no keys in the cache, then download keys from Microsoft JWKS cache
-            return getRSAPublicKeyFromModulusExponent(msalCache.n(), msalCache.e());
+            return getRSAPublicKeyFromModulusExponent(msalCache.modulus(), msalCache.exponent());
         }
         return retrievePublicKey(keyId);
     }
@@ -103,29 +105,35 @@ public class MsalService {
         var response = webClient.get()
                 .uri("https://login.microsoftonline.com/{tenantId}/discovery/v2.0/keys", msalProperties.getTenantId())
                 .retrieve()
-                .bodyToMono(MsalKeysResponse.class)
+                .bodyToMono(new ParameterizedTypeReference<Map<String, List<HashMap<String, Object>>>>() {
+                })
                 .block();
 
-        if (response == null || response.keys() == null) {
+        if (response == null || response.isEmpty()) {
             throw new RuntimeException("No keys found in JWKS response");
         }
 
         // save all public keys to cache
-        response.keys().forEach((key) ->
-                msalRedisTemplate.opsForValue().set(
-                        CACHE_PREFIX + key.kid(),
-                        MsalCache.builder()
-                                .withN(key.n())
-                                .withE(key.e())
-                                .build(),
-                        Duration.ofHours(24)
-                )
-        );
+        var keys = response.get("keys")
+                .stream()
+                .map((keyMap) -> {
+                    String kid = (String) keyMap.get("kid");
+                    String n = (String) keyMap.get("n");
+                    String e = (String) keyMap.get("e");
+                    String issuer = (String) keyMap.get("issuer");
+                    var key = new MsalKeyResponse(kid, n, e, issuer);
+                    msalRedisTemplate.opsForValue().set(CACHE_PREFIX + key.keyId(), MsalCache.builder()
+                            .withModulus(key.modulus())
+                            .withExponent(key.exponent())
+                            .build());
+                    return key;
+                })
+                .toList();
 
         // find specific key with key id
-        var maybeKey = response.keys()
+        var maybeKey = keys
                 .stream()
-                .filter((key) -> key.kid().equals(keyId))
+                .filter((key) -> key.keyId().equals(keyId))
                 .findFirst();
 
         if (maybeKey.isEmpty()) {
@@ -133,7 +141,7 @@ public class MsalService {
         }
 
         var key = maybeKey.get();
-        return getRSAPublicKeyFromModulusExponent(key.n(), key.e());
+        return getRSAPublicKeyFromModulusExponent(key.modulus(), key.exponent());
     }
 
     /**

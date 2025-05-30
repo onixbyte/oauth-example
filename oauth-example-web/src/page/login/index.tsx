@@ -1,21 +1,19 @@
 import React from "react"
 import { useMsal } from "@azure/msal-react"
-import { InteractionType, PopupRequest } from "@azure/msal-browser"
+import { PopupRequest } from "@azure/msal-browser"
 import { loginSuccess } from "@/store/auth-slice"
 import { useAppDispatch } from "@/store"
 import * as AuthorisationApi from "@/service/api/authorisation"
-
-const loginRequest: PopupRequest = {
-  scopes: ["openid", "profile", "email"],
-}
 
 export const Login = () => {
   const { instance } = useMsal()
   const dispatch = useAppDispatch()
 
-  const handleMsalLogin = async () => {
+  const doMsalLogin = async () => {
     try {
-      const response = await instance.loginPopup(loginRequest)
+      const response = await instance.loginPopup({
+        scopes: ["openid", "profile", "email"]
+      })
       console.log(response)
 
       await AuthorisationApi.msalLogin(response.idToken)
@@ -29,8 +27,10 @@ export const Login = () => {
 
   return (
     <div>
-      <h1>Login</h1>
-      <button onClick={() => void handleMsalLogin()}>
+      <h1 className="text-center">Login</h1>
+      <button
+        onClick={() => void doMsalLogin()}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
         Login with Microsoft Entra ID
       </button>
     </div>
