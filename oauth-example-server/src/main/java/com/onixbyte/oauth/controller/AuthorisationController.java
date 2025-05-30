@@ -35,8 +35,8 @@ public class AuthorisationController {
             var idToken = msalAuthoriseRequest.idToken();
 
             // decode JWT to retrieve kid in header
-            var decodedJWT = JWT.decode(idToken);
-            var keyId = decodedJWT.getKeyId();
+            var decodedToken = JWT.decode(idToken);
+            var keyId = decodedToken.getKeyId();
             if (keyId == null) {
                 throw new RuntimeException("Token header missing key id.");
             }
@@ -55,11 +55,11 @@ public class AuthorisationController {
                     .withAudience(msalService.getClientId())
                     .build();
 
-            // 6. 验证token
+            // verify token
             verifier.verify(idToken);
 
-            // 7. 认证成功后，你可以取到用户标识，比如 oid claim
-            var oid = decodedJWT.getClaim("oid").asString();
+            // get oid claim from token
+            var oid = decodedToken.getClaim("oid").asString();
 
             log.info("User logged in with oid: {}", oid);
         } catch (Exception e) {
