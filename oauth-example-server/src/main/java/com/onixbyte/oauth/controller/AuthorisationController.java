@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/authorisation")
@@ -46,9 +47,12 @@ public class AuthorisationController {
         if (authenticatedToken instanceof MsalToken msalToken) {
             log.info("User logged in with Microsoft Entra ID: {}", msalToken.getDetails().getMsalOpenId());
             var user = msalToken.getDetails();
-            var authorisationToken = tokenResolver.createToken(Duration.ofDays(1), "oauth-example", msalToken.getName(), new HashMap<>() {{
-                put("uid", String.valueOf(user.getId()));
-            }});
+            var authorisationToken = tokenResolver.createToken(
+                    Duration.ofDays(1),
+                    "oauth-example",
+                    msalToken.getName(),
+                    Map.of("uid", String.valueOf(user.getId()))
+            );
             return ResponseEntity.status(HttpStatus.OK)
                     .header("Authorization", authorisationToken)
                     .body(user.asResponse());
