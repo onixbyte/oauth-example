@@ -58,10 +58,12 @@ public class AuthorisationController {
             // verify token
             verifier.verify(idToken);
 
-            // get oid claim from token
-            var oid = decodedToken.getClaim("oid").asString();
+            // get open id from token
+            var msalOpenId = decodedToken.getClaim("oid").asString();
 
-            log.info("User logged in with oid: {}", oid);
+
+
+            log.info("User logged in with Microsoft Entra ID: {}", msalOpenId);
         } catch (Exception e) {
             log.error("Token validation failed", e);
         }

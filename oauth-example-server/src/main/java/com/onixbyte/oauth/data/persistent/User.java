@@ -3,6 +3,9 @@ package com.onixbyte.oauth.data.persistent;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
+import com.onixbyte.devkit.utils.BoolUtil;
+
+import java.util.Objects;
 
 @Table("users")
 public class User {
@@ -32,4 +35,73 @@ public class User {
      * Open ID provided by Microsoft Entra ID.
      */
     private String msalOpenId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMsalOpenId() {
+        return msalOpenId;
+    }
+
+    public void setMsalOpenId(String msalOpenId) {
+        this.msalOpenId = msalOpenId;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        var user = (User) object;
+        return BoolUtil.and(
+                Objects.equals(getId(), user.getId()),
+                Objects.equals(getUsername(), user.getUsername()),
+                Objects.equals(getPassword(), user.getPassword()),
+                Objects.equals(getEmail(), user.getEmail()),
+                Objects.equals(getMsalOpenId(), user.getMsalOpenId())
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getMsalOpenId());
+    }
+
+    public User() {
+    }
+
+    public User(Long id, String username, String password, String email, String msalOpenId) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.msalOpenId = msalOpenId;
+    }
 }

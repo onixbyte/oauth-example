@@ -2,7 +2,6 @@ package com.onixbyte.oauth.service;
 
 import com.onixbyte.oauth.data.cache.MsalCache;
 import com.onixbyte.oauth.data.response.MsalKeyResponse;
-import com.onixbyte.oauth.data.response.MsalKeysResponse;
 import com.onixbyte.oauth.properties.MsalProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +18,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.security.spec.RSAPublicKeySpec;
-import java.time.Duration;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Services for Microsoft Entra ID authorisations.
