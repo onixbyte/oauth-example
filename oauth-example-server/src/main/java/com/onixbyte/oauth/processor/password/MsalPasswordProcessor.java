@@ -1,4 +1,4 @@
-package com.onixbyte.oauth.processor;
+package com.onixbyte.oauth.processor.password;
 
 import com.onixbyte.oauth.data.persistent.User;
 import org.slf4j.Logger;

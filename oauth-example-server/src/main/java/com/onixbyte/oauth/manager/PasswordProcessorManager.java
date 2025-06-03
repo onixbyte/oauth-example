@@ -1,7 +1,9 @@
 package com.onixbyte.oauth.manager;
 
 import com.onixbyte.oauth.data.persistent.User;
-import com.onixbyte.oauth.processor.PasswordProcessor;
+import com.onixbyte.oauth.processor.password.PasswordProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,7 @@ import java.util.List;
 @Component
 public class PasswordProcessorManager {
 
+    private static final Logger log = LoggerFactory.getLogger(PasswordProcessorManager.class);
     private final List<PasswordProcessor> passwordProcessors;
 
     @Autowired
@@ -24,6 +27,7 @@ public class PasswordProcessorManager {
                 return;
             }
         }
+        log.error("Cannot process password with any password processor.");
     }
 
 }
