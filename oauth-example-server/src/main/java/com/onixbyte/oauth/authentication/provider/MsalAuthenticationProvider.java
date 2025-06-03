@@ -62,10 +62,10 @@ public class MsalAuthenticationProvider implements AuthenticationProvider {
                 var msalOpenId = decodedToken.getClaim("oid").asString();
 
                 userService.getUserByMsalOpenId(msalOpenId)
-                        .ifPresentOrElse((user) -> {
+                        .ifPresentOrElse((user) -> { // user is registered, login directly
                             token.setDetails(user);
                             token.setAuthenticated(true);
-                        }, () -> {
+                        }, () -> { // user has not registered yet, automatically register a new account
                             var username = decodedToken.getClaim("name").asString();
                             var email = decodedToken.getClaim("preferred_username").asString();
 
