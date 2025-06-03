@@ -1,5 +1,5 @@
-import { useAppSelector } from "@/store"
 import { Outlet } from "react-router"
+import { useAppSelector } from "@/store"
 
 export const DashboardLayout = () => {
   const user = useAppSelector(({ auth }) => auth.user!)
