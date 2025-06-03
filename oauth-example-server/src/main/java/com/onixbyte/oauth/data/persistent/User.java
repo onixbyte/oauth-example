@@ -4,6 +4,7 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.onixbyte.devkit.utils.BoolUtil;
+import com.onixbyte.oauth.data.response.UserResponse;
 
 import java.util.Objects;
 
@@ -103,5 +104,53 @@ public class User {
         this.password = password;
         this.email = email;
         this.msalOpenId = msalOpenId;
+    }
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+
+    public static class UserBuilder {
+        private Long id;
+        private String username;
+        private String password;
+        private String email;
+        private String msalOpenId;
+
+        private UserBuilder() {
+        }
+
+        public UserBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder withMsalOpenId(String msalOpenId) {
+            this.msalOpenId = msalOpenId;
+            return this;
+        }
+
+        public User build() {
+            return new User(id, username, password, email, msalOpenId);
+        }
+    }
+
+    public UserResponse asResponse() {
+        return new UserResponse(String.valueOf(id), username, email, msalOpenId);
     }
 }

@@ -2,30 +2,36 @@ package com.onixbyte.oauth.authentication.token;
 
 import com.onixbyte.oauth.data.persistent.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-public class MsalToken implements Authentication, CredentialsContainer {
+public class MsalToken implements Authentication {
 
-    private String msalOpenId;
+    private String idToken;
 
-    public MsalToken(String msalOpenId) {
-        this.msalOpenId = msalOpenId;
+    private User details;
+
+    private boolean authenticated;
+
+    public MsalToken(String idToken, User details) {
+        this.idToken = idToken;
+        this.details = details;
+        authenticated = Objects.nonNull(details);
     }
 
-    public static MsalToken unauthenticated(String msalOpenId) {
-        return new MsalToken(msalOpenId);
+    public static MsalToken unauthenticated(String idToken) {
+        return new MsalToken(idToken, null);
     }
 
-    public String getMsalOpenId() {
-        return msalOpenId;
+    public static MsalToken authenticated(User details) {
+        return new MsalToken("", details);
     }
 
-    public void setMsalOpenId(String msalOpenId) {
-        this.msalOpenId = msalOpenId;
+    public void setDetails(User details) {
+        this.details = details;
     }
 
     @Override
@@ -33,6 +39,11 @@ public class MsalToken implements Authentication, CredentialsContainer {
         return List.of();
     }
 
+    /**
+     * Get user's credentials. Credentials are empty for users logged with <b>Microsoft Entra ID</b>.
+     *
+     * @return credentials of the current user
+     */
     @Override
     public String getCredentials() {
         return "";
@@ -40,32 +51,34 @@ public class MsalToken implements Authentication, CredentialsContainer {
 
     @Override
     public User getDetails() {
-
-        return null;
+        return details;
     }
 
     @Override
     public String getPrincipal() {
-        return null;
+        return idToken;
     }
 
     @Override
     public boolean isAuthenticated() {
-        return false;
+        return authenticated;
     }
 
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
+        this.authenticated = isAuthenticated;
     }
 
     @Override
     public String getName() {
-        return "";
+        return details.getUsername();
     }
 
-    @Override
-    public void eraseCredentials() {
+    public String getIdToken() {
+        return idToken;
+    }
 
+    public void setIdToken(String idToken) {
+        this.idToken = idToken;
     }
 }

@@ -1,6 +1,5 @@
 import React from "react"
 import { useMsal } from "@azure/msal-react"
-import { PopupRequest } from "@azure/msal-browser"
 import { loginSuccess } from "@/store/auth-slice"
 import { useAppDispatch } from "@/store"
 import * as AuthorisationApi from "@/service/api/authorisation"
@@ -16,7 +15,7 @@ export const Login = () => {
       })
       console.log(response)
 
-      await AuthorisationApi.msalLogin(response.idToken)
+      const userResponse = await AuthorisationApi.msalLogin(response.idToken)
 
       // 假设后端返回用户信息，更新redux状态
       dispatch(loginSuccess({ user: response.account.username }))

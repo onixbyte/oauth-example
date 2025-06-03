@@ -56,4 +56,8 @@ public class UserService {
 
         return user;
     }
+
+    public Optional<User> getUserByMsalOpenId(String msalOpenId) {
+        return Optional.ofNullable(userRepository.getUserByMsalOpenId(msalOpenId));
+    }
 }

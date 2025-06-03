@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onixbyte.oauth.repository.UserRepository">
-    <select id="canRegister">
+    <select id="canRegister" resultType="boolean">
         SELECT COUNT(*) = 0
         FROM users
         <where>
@@ -11,5 +11,11 @@
                 OR msal_open_id = #{user.msalOpenId}
             </if>
         </where>
+    </select>
+
+    <select id="getUserByMsalOpenId" resultType="com.onixbyte.oauth.data.persistent.User">
+        SELECT *
+        FROM users
+        WHERE msal_open_id = #{msalOpenId}
     </select>
 </mapper>
