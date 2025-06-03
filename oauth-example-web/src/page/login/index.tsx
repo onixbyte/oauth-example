@@ -1,37 +1,24 @@
 import React from "react"
 import { useMsal } from "@azure/msal-react"
-import { loginSuccess } from "@/store/auth-slice"
 import { useAppDispatch } from "@/store"
-import * as AuthorisationApi from "@/service/api/authorisation"
+import { doMsalLogin } from "@/service/auth"
+import { useNavigate } from "react-router"
 
 export const Login = () => {
   const { instance } = useMsal()
   const dispatch = useAppDispatch()
-
-  const doMsalLogin = async () => {
-    try {
-      const response = await instance.loginPopup({
-        scopes: ["openid", "profile", "email"]
-      })
-      console.log(response)
-
-      const userResponse = await AuthorisationApi.msalLogin(response.idToken)
-
-      // 假设后端返回用户信息，更新redux状态
-      dispatch(loginSuccess({ user: response.account.username }))
-    } catch (err) {
-      console.error("MSAL login failed", err)
-    }
-  }
+  const navigate = useNavigate()
 
   return (
     <div>
       <h1 className="text-center">Login</h1>
-      <button
-        onClick={() => void doMsalLogin()}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        Login with Microsoft Entra ID
-      </button>
+      <div className="mx-auto max-w-[680px] w-[680px] flex justify-center gap-2 bg-[#D0D0D0]">
+        <button
+          onClick={() => void doMsalLogin(instance, dispatch, () => void navigate("/"))}
+          className="bg-[#00A3EE] text-white px-4 py-2 rounded hover:bg-[#00ADFF]">
+          Login with Microsoft Entra ID
+        </button>
+      </div>
     </div>
   )
 }
