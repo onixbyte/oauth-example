@@ -1,8 +1,8 @@
 import React from "react"
+import { useNavigate } from "react-router"
 import { useMsal } from "@azure/msal-react"
 import { useAppDispatch } from "@/store"
 import { doMsalLogin } from "@/service/auth"
-import { useNavigate } from "react-router"
 
 export const Login = () => {
   const { instance } = useMsal()
