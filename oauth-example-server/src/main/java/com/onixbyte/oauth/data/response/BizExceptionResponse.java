@@ -1,14 +1,12 @@
 package com.onixbyte.oauth.data.response;
 
-import com.onixbyte.oauth.exception.BizException;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 public record BizExceptionResponse(
         LocalDateTime timestamp,
         String message
-) {
+) implements BaseResponse {
 
     public static BizExceptionResponseBuilder builder() {
         return new BizExceptionResponseBuilder();

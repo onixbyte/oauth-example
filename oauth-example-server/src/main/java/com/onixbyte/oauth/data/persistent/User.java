@@ -3,6 +3,7 @@ package com.onixbyte.oauth.data.persistent;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import com.onixbyte.devkit.utils.BoolUtil;
+import com.onixbyte.oauth.data.persistent.table.UserTableDef;
 import com.onixbyte.oauth.data.response.UserResponse;
 
 import java.util.Objects;
@@ -196,4 +197,6 @@ public class User {
     public UserResponse asResponse() {
         return new UserResponse(String.valueOf(id), username, email, msalOpenId);
     }
+
+    public static UserTableDef USER = new UserTableDef();
 }
