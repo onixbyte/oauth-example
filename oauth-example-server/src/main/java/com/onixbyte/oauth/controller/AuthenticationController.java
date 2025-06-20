@@ -3,6 +3,7 @@ package com.onixbyte.oauth.controller;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.onixbyte.oauth.authentication.token.MsalToken;
 import com.onixbyte.oauth.data.request.MsalAuthenticationRequest;
+import com.onixbyte.oauth.data.request.NormalAuthenticationRequest;
 import com.onixbyte.oauth.data.response.UserResponse;
 import com.onixbyte.oauth.exception.BizException;
 import com.onixbyte.simplejwt.TokenResolver;
@@ -36,6 +37,13 @@ public class AuthenticationController {
     ) {
         this.authenticationManager = authenticationManager;
         this.tokenResolver = tokenResolver;
+    }
+
+    @PostMapping
+    public ResponseEntity<UserResponse> normalAuthentication(
+            @RequestBody NormalAuthenticationRequest request
+    ) {
+        return null;
     }
 
     /**
