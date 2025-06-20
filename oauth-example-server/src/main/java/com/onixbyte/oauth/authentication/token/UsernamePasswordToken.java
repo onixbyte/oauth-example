@@ -121,4 +121,20 @@ public class UsernamePasswordToken implements Authentication, CredentialsContain
             return new UsernamePasswordToken(username, password, user, authenticated);
         }
     }
+
+    public static UsernamePasswordToken unauthenticated(String username, String password) {
+        return UsernamePasswordToken.builder()
+                .withUsername(username)
+                .withPassword(password)
+                .build();
+    }
+
+    public static UsernamePasswordToken authenticated(User user) {
+        return UsernamePasswordToken.builder()
+                .withUser(user)
+                .withPassword("")
+                .withUsername(user.getUsername())
+                .withAuthenticated(true)
+                .build();
+    }
 }
