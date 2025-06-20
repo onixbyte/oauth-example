@@ -12,11 +12,8 @@ import java.util.List;
 public class UsernamePasswordToken implements Authentication, CredentialsContainer {
 
     private String username;
-
     private String password;
-
     private User user;
-
     private boolean authenticated;
 
     @Override
@@ -70,5 +67,58 @@ public class UsernamePasswordToken implements Authentication, CredentialsContain
     public void eraseCredentials() {
         this.password = "";
         this.user.setPassword("");
+    }
+
+    public UsernamePasswordToken() {
+    }
+
+    public UsernamePasswordToken(
+            String username,
+            String password,
+            User user,
+            boolean authenticated
+    ) {
+        this.username = username;
+        this.password = password;
+        this.user = user;
+        this.authenticated = authenticated;
+    }
+
+    public static UsernamePasswordTokenBuilder builder() {
+        return new UsernamePasswordTokenBuilder();
+    }
+
+    public static class UsernamePasswordTokenBuilder {
+        private String username;
+        private String password;
+        private User user;
+        private boolean authenticated;
+
+        private UsernamePasswordTokenBuilder() {
+        }
+
+        public UsernamePasswordTokenBuilder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UsernamePasswordTokenBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UsernamePasswordTokenBuilder withUser(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public UsernamePasswordTokenBuilder withAuthenticated(boolean authenticated) {
+            this.authenticated = authenticated;
+            return this;
+        }
+
+        public UsernamePasswordToken build() {
+            return new UsernamePasswordToken(username, password, user, authenticated);
+        }
     }
 }
