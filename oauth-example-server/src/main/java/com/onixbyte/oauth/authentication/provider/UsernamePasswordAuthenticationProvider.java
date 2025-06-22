@@ -26,23 +26,25 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        var token = (UsernamePasswordToken) authentication;
-        var user = userService.getUserByUsername(token.getPrincipal());
+        if (authentication instanceof UsernamePasswordToken token) {
+            var user = userService.getUserByUsername(token.getPrincipal());
 
-        if (Objects.isNull(user)) {
-            throw new BizException(HttpStatus.BAD_REQUEST, "No such user.");
+            if (Objects.isNull(user)) {
+                throw new BizException(HttpStatus.BAD_REQUEST, "No such user.");
+            }
+
+            if (!passwordEncoder.matches(token.getCredentials(), user.getPassword())) {
+                throw new BizException(HttpStatus.BAD_REQUEST, "Password incorrect.");
+            }
+
+            if (Boolean.TRUE.equals(user.getTotpEnabled())) {
+                throw new TotpRequiredException(user.getId(), "Please complete TOTP authentication.");
+            }
+
+            token.setDetails(user);
+            return token;
         }
-
-        if (!passwordEncoder.matches(token.getCredentials(), user.getPassword())) {
-            throw new BizException(HttpStatus.BAD_REQUEST, "Password incorrect.");
-        }
-
-        if (Boolean.TRUE.equals(user.getTotpEnabled())) {
-            throw new TotpRequiredException(user.getId(), "Please complete TOTP authentication.");
-        }
-
-        token.setDetails(user);
-        return token;
+        return null;
     }
 
     @Override

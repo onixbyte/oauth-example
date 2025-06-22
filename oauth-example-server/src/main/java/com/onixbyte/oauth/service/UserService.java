@@ -65,4 +65,12 @@ public class UserService {
     public Optional<User> getUserByMsalOpenId(String msalOpenId) {
         return userRepository.getUserByMsalOpenId(msalOpenId);
     }
+
+    public User getUserById(Long userId) {
+        return userRepository.selectOneByCondition(User.USER.ID.eq(userId));
+    }
+
+    public int updateUser(User user) {
+        return userRepository.update(user);
+    }
 }

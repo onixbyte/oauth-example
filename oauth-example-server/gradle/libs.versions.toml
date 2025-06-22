@@ -6,6 +6,7 @@ mybatisFlex = "1.10.9"
 spring = "6.2.5"
 springBoot = "3.4.4"
 springSecurity = "6.4.4"
+commons-codec = "1.18.0"
 reactor = "3.7.4"
 junit-platform-launcher = "1.11.4"
 
@@ -25,6 +26,7 @@ springBoot-starter-webflux = { group = "org.springframework.boot", name = "sprin
 springBoot-starter-redis = { group = "org.springframework.boot", name = "spring-boot-starter-data-redis", version.ref = "springBoot" }
 springBoot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "springBoot" }
 springBoot-core-configurationProcessor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor", version.ref = "springBoot" }
+commons-codec = { group = "commons-codec", name = "commons-codec", version.ref = "commons-codec" }
 test-reactor = { group = "io.projectreactor", name = "reactor-test", version.ref = "reactor" }
 test-springBoot = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "springBoot" }
 test-springSecurity = { group = "org.springframework.security", name = "spring-security-test", version.ref = "springSecurity" }

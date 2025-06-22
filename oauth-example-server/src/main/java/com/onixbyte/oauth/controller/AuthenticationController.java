@@ -2,8 +2,11 @@ package com.onixbyte.oauth.controller;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.onixbyte.oauth.authentication.token.MsalToken;
+import com.onixbyte.oauth.authentication.token.TotpToken;
+import com.onixbyte.oauth.authentication.token.UsernamePasswordToken;
 import com.onixbyte.oauth.data.request.MsalAuthenticationRequest;
 import com.onixbyte.oauth.data.request.NormalAuthenticationRequest;
+import com.onixbyte.oauth.data.request.TotpAuthenticationRequest;
 import com.onixbyte.oauth.data.response.UserResponse;
 import com.onixbyte.oauth.exception.BizException;
 import com.onixbyte.simplejwt.TokenResolver;
@@ -43,7 +46,46 @@ public class AuthenticationController {
     public ResponseEntity<UserResponse> normalAuthentication(
             @RequestBody NormalAuthenticationRequest request
     ) {
-        return null;
+        var authenticatedToken = (UsernamePasswordToken) authenticationManager.authenticate(
+                UsernamePasswordToken.unauthenticated(request.username(), request.password())
+        );
+
+        if (!authenticatedToken.isAuthenticated()) {
+            throw new BizException(HttpStatus.UNAUTHORIZED, "Incorrect username or password.");
+        }
+
+        var token = tokenResolver.createToken(Duration.ofHours(1),
+                "OnixByte User", "OnixByte User", Map.of(
+                        "uid", authenticatedToken.getPrincipal()
+                )
+        );
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Authorization", token)
+                .body(authenticatedToken.getDetails().asResponse());
+    }
+
+    @PostMapping("/totp")
+    public ResponseEntity<UserResponse> totpAuthentication(
+            @RequestBody TotpAuthenticationRequest request
+    ) {
+        var authenticatedToken = (TotpToken) authenticationManager.authenticate(
+                TotpToken.unauthenticated(request.userId(), request.totp())
+        );
+
+        if (!authenticatedToken.isAuthenticated()) {
+            throw new BizException(HttpStatus.UNAUTHORIZED, "TOTP incorrect.");
+        }
+
+        var token = tokenResolver.createToken(Duration.ofHours(1),
+                "OnixByte User", "OnixByte User", Map.of(
+                        "uid", authenticatedToken.getPrincipal()
+                )
+        );
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Authorization", token)
+                .body(authenticatedToken.getDetails().asResponse());
     }
 
     /**

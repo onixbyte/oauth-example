@@ -1,10 +1,12 @@
 package com.onixbyte.oauth.config;
 
 import com.onixbyte.oauth.authentication.provider.MsalAuthenticationProvider;
+import com.onixbyte.oauth.authentication.provider.TotpAuthenticationProvider;
 import com.onixbyte.oauth.authentication.provider.UsernamePasswordAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -30,8 +32,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((customiser) -> customiser
                         .requestMatchers("/error", "/error/**").permitAll()
-                        .requestMatchers("/authorisation/**").permitAll()
-                        .requestMatchers("/authorisation/logout").authenticated()
+                        .requestMatchers("/authentication/**").permitAll()
+                        .requestMatchers("/authentication/logout").authenticated()
                         .anyRequest().authenticated())
                 // .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -44,13 +46,14 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            HttpSecurity httpSecurity,
-            UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider,
-            MsalAuthenticationProvider msalAuthenticationProvider
+            MsalAuthenticationProvider msalProvider,
+            TotpAuthenticationProvider totpProvider,
+            UsernamePasswordAuthenticationProvider usernamePasswordProvider
     ) throws Exception {
-        var authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(usernamePasswordAuthenticationProvider);
-        authenticationManagerBuilder.authenticationProvider(msalAuthenticationProvider);
-        return authenticationManagerBuilder.build();
+        return new ProviderManager(
+                msalProvider,
+                totpProvider,
+                usernamePasswordProvider
+        );
     }
 }

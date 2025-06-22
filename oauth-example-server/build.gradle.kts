@@ -31,6 +31,7 @@ dependencies {
     implementation(libs.springBoot.starter.webflux)
     implementation(libs.springBoot.starter.redis)
     implementation(libs.springBoot.starter.security)
+    implementation(libs.commons.codec)
     compileOnly(libs.springBoot.core.configurationProcessor)
     annotationProcessor(libs.springBoot.core.configurationProcessor)
     testImplementation(libs.test.reactor)

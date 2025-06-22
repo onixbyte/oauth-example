@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class UsernamePasswordToken implements Authentication, CredentialsContainer {
 
@@ -97,18 +96,18 @@ public class UsernamePasswordToken implements Authentication, CredentialsContain
         private UsernamePasswordTokenBuilder() {
         }
 
-        public UsernamePasswordTokenBuilder withUsername(String username) {
+        public UsernamePasswordTokenBuilder withPrinciple(String principle) {
             this.username = username;
             return this;
         }
 
-        public UsernamePasswordTokenBuilder withPassword(String password) {
-            this.password = password;
+        public UsernamePasswordTokenBuilder withCredentials(String credentials) {
+            this.password = credentials;
             return this;
         }
 
-        public UsernamePasswordTokenBuilder withUser(User user) {
-            this.user = user;
+        public UsernamePasswordTokenBuilder withDetails(User details) {
+            this.user = details;
             return this;
         }
 
@@ -124,16 +123,16 @@ public class UsernamePasswordToken implements Authentication, CredentialsContain
 
     public static UsernamePasswordToken unauthenticated(String username, String password) {
         return UsernamePasswordToken.builder()
-                .withUsername(username)
-                .withPassword(password)
+                .withPrinciple(username)
+                .withCredentials(password)
                 .build();
     }
 
     public static UsernamePasswordToken authenticated(User user) {
         return UsernamePasswordToken.builder()
-                .withUser(user)
-                .withPassword("")
-                .withUsername(user.getUsername())
+                .withDetails(user)
+                .withCredentials("")
+                .withPrinciple(user.getUsername())
                 .withAuthenticated(true)
                 .build();
     }

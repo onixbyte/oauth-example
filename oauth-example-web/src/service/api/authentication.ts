@@ -5,7 +5,7 @@ export async function msalLogin(idToken: string): Promise<{
   authorisationToken: string
   user: UserResponse
 }> {
-  const { data, headers } = await webClient.post<UserResponse>("/authorisation/msal", {
+  const { data, headers } = await webClient.post<UserResponse>("/authentication/msal", {
     idToken,
   })
 

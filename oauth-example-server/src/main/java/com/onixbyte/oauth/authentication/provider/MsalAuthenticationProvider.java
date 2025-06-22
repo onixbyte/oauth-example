@@ -73,6 +73,7 @@ public class MsalAuthenticationProvider implements AuthenticationProvider {
                                     .withUsername(username)
                                     .withEmail(email)
                                     .withMsalOpenId(msalOpenId)
+                                    .withTotpSecret(null)
                                     .build());
 
                             token.setDetails(user);
