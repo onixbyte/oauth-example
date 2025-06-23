@@ -37,7 +37,7 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
                 throw new BizException(HttpStatus.BAD_REQUEST, "Password incorrect.");
             }
 
-            if (Boolean.TRUE.equals(user.getTotpEnabled())) {
+            if (user.totpEnabled()) {
                 throw new TotpRequiredException(user.getId(), "Please complete TOTP authentication.");
             }
 

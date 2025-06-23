@@ -13,6 +13,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.Duration;
 
 @Service
@@ -56,5 +57,17 @@ public class OtpService {
             log.error("Error.", e);
             throw new BizException(HttpStatus.UNAUTHORIZED, "TOTP Secret incorrect, please try again later.");
         }
+    }
+
+    public String generateSecret() {
+        var random = new SecureRandom();
+        var bytes = new byte[10]; // 80 bits
+        random.nextBytes(bytes);
+
+        var base32 = new Base32();
+        var secret = base32.encodeToString(bytes);
+        // remove padding '='
+        secret = secret.replace("=", "");
+        return secret;
     }
 }

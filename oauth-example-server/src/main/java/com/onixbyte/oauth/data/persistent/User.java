@@ -178,7 +178,7 @@ public class User {
     }
 
     public UserResponse asResponse() {
-        return new UserResponse(String.valueOf(id), username, email, msalOpenId);
+        return new UserResponse(String.valueOf(id), username, email);
     }
 
     public static UserTableDef USER = new UserTableDef();
