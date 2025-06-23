@@ -49,7 +49,7 @@ public class SecurityConfig {
             MsalAuthenticationProvider msalProvider,
             TotpAuthenticationProvider totpProvider,
             UsernamePasswordAuthenticationProvider usernamePasswordProvider
-    ) throws Exception {
+    ) {
         return new ProviderManager(
                 msalProvider,
                 totpProvider,
