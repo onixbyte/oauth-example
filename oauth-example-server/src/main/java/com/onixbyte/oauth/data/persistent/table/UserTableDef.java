@@ -17,12 +17,10 @@ public class UserTableDef extends TableDef {
 
     public final QueryColumn TOTP_SECRET = new QueryColumn("", "totp_secret");
 
-    public final QueryColumn TOTP_ENABLED = new QueryColumn("", "totp_enabled");
-
     public final QueryColumn ALL_COLUMNS = new QueryColumn("", "*");
 
     public final QueryColumn[] DEFAULT_COLUMNS = new QueryColumn[]{
-            ID, USERNAME, PASSWORD, EMAIL, MSAL_OPEN_ID, TOTP_SECRET, TOTP_ENABLED
+            ID, USERNAME, PASSWORD, EMAIL, MSAL_OPEN_ID, TOTP_SECRET
     };
 
     public UserTableDef() {

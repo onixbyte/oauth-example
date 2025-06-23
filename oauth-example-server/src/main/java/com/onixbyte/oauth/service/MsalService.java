@@ -21,7 +21,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.*;
 
 /**
- * Services for Microsoft Entra ID authorisations.
+ * Services for Microsoft Entra ID authentication.
  *
  * @author siujamo
  */

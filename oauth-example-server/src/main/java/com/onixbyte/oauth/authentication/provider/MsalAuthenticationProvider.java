@@ -16,6 +16,12 @@ import org.springframework.stereotype.Component;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * {@code MsalAuthenticationProvider} provides authentication by Microsoft Entra ID.
+ *
+ * @author zihluwang
+ * @author siujamo
+ */
 @Component
 public class MsalAuthenticationProvider implements AuthenticationProvider {
 

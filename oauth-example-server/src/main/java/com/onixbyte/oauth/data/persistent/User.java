@@ -42,11 +42,6 @@ public class User {
      */
     private String totpSecret;
 
-    /**
-     * Marks the current user turned on TOTP.
-     */
-    private Boolean totpEnabled;
-
     public Long getId() {
         return id;
     }
@@ -95,14 +90,6 @@ public class User {
         this.totpSecret = totpSecret;
     }
 
-    public Boolean getTotpEnabled() {
-        return totpEnabled;
-    }
-
-    public void setTotpEnabled(Boolean totpEnabled) {
-        this.totpEnabled = totpEnabled;
-    }
-
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
@@ -130,8 +117,7 @@ public class User {
             String password,
             String email,
             String msalOpenId,
-            String totpSecret,
-            Boolean totpEnabled
+            String totpSecret
     ) {
         this.id = id;
         this.username = username;
@@ -139,7 +125,6 @@ public class User {
         this.email = email;
         this.msalOpenId = msalOpenId;
         this.totpSecret = totpSecret;
-        this.totpEnabled = totpEnabled;
     }
 
     public static UserBuilder builder() {
@@ -153,7 +138,6 @@ public class User {
         private String email;
         private String msalOpenId;
         private String totpSecret;
-        private Boolean totpEnabled;
 
         private UserBuilder() {
         }
@@ -185,12 +169,11 @@ public class User {
 
         public UserBuilder withTotpSecret(String totpSecret) {
             this.totpSecret = totpSecret;
-            this.totpEnabled = Objects.nonNull(totpSecret) && !totpSecret.isBlank();
             return this;
         }
 
         public User build() {
-            return new User(id, username, password, email, msalOpenId, totpSecret, totpEnabled);
+            return new User(id, username, password, email, msalOpenId, totpSecret);
         }
     }
 
@@ -199,4 +182,8 @@ public class User {
     }
 
     public static UserTableDef USER = new UserTableDef();
+
+    public boolean totpEnabled() {
+        return Objects.nonNull(totpSecret) && !totpSecret.isBlank();
+    }
 }

@@ -10,9 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import java.security.InvalidKeyException;
-import java.time.Duration;
-
 @Component
 public class TotpAuthenticationProvider implements AuthenticationProvider {
 
@@ -28,7 +25,7 @@ public class TotpAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         if (authentication instanceof TotpToken token) {
             var user = userService.getUserById(token.getPrincipal());
-            if (Boolean.FALSE.equals(user.getTotpEnabled())) {
+            if (!user.totpEnabled()) {
                 throw new BizException(HttpStatus.CONFLICT, "You haven't enable TOTP yet.");
             }
 
