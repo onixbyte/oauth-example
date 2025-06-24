@@ -9,7 +9,7 @@ import com.onixbyte.oauth.data.request.NormalAuthenticationRequest;
 import com.onixbyte.oauth.data.request.TotpAuthenticationRequest;
 import com.onixbyte.oauth.data.response.UserResponse;
 import com.onixbyte.oauth.exception.BizException;
-import com.onixbyte.simplejwt.TokenResolver;
+import com.onixbyte.oauth.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +31,14 @@ public class AuthenticationController {
     private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final AuthenticationManager authenticationManager;
-    private final TokenResolver<DecodedJWT> tokenResolver;
+    private final TokenService tokenService;
 
     @Autowired
     public AuthenticationController(
             AuthenticationManager authenticationManager,
-            TokenResolver<DecodedJWT> tokenResolver
-    ) {
+            TokenService tokenService) {
         this.authenticationManager = authenticationManager;
-        this.tokenResolver = tokenResolver;
+        this.tokenService = tokenService;
     }
 
     @PostMapping
@@ -54,11 +53,7 @@ public class AuthenticationController {
             throw new BizException(HttpStatus.UNAUTHORIZED, "Incorrect username or password.");
         }
 
-        var token = tokenResolver.createToken(Duration.ofHours(1),
-                "OnixByte User", "OnixByte User", Map.of(
-                        "uid", authenticatedToken.getPrincipal()
-                )
-        );
+        var token = tokenService.createToken(Duration.ofHours(1), authenticatedToken.getDetails());
 
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Authorization", token)
@@ -77,11 +72,7 @@ public class AuthenticationController {
             throw new BizException(HttpStatus.UNAUTHORIZED, "TOTP incorrect.");
         }
 
-        var token = tokenResolver.createToken(Duration.ofHours(1),
-                "OnixByte User", "OnixByte User", Map.of(
-                        "uid", authenticatedToken.getPrincipal()
-                )
-        );
+        var token = tokenService.createToken(Duration.ofHours(1), authenticatedToken.getDetails());
 
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Authorization", token)
@@ -97,21 +88,16 @@ public class AuthenticationController {
     public ResponseEntity<UserResponse> msalAuthentication(@RequestBody MsalAuthenticationRequest request) {
         // get id token from frontend
         var idToken = request.idToken();
-        var authenticatedToken = authenticationManager.authenticate(MsalToken.unauthenticated(idToken));
-        if (authenticatedToken instanceof MsalToken token) {
-            log.info("User logged in with Microsoft Entra ID: {}", token.getDetails().getMsalOpenId());
-            var user = token.getDetails();
-            var authorisationToken = tokenResolver.createToken(
-                    Duration.ofDays(1),
-                    "oauth-example",
-                    token.getName(),
-                    Map.of("uid", String.valueOf(user.getId()))
-            );
-            return ResponseEntity.status(HttpStatus.OK)
-                    .header("Authorization", authorisationToken)
-                    .body(user.asResponse());
-        }
+        var authenticatedToken = (MsalToken) authenticationManager.authenticate(
+                MsalToken.unauthenticated(idToken)
+        );
 
-        throw new BizException(HttpStatus.INTERNAL_SERVER_ERROR, "Server crushed, please try again later.");
+        var user = authenticatedToken.getDetails();
+
+        log.info("User logged in with Microsoft Entra ID: {}", user.getMsalOpenId());
+        var token = tokenService.createToken(Duration.ofDays(1), user);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Authorization", token)
+                .body(user.asResponse());
     }
 }

@@ -1,7 +1,7 @@
 [versions]
 postgres = "42.7.5"
 hikari = "5.1.0"
-devkit = "2.1.3"
+onixbyteToolbox = "3.0.0"
 mybatisFlex = "1.10.9"
 spring = "6.2.5"
 springBoot = "3.4.4"
@@ -9,17 +9,15 @@ springSecurity = "6.4.4"
 commons-codec = "1.18.0"
 reactor = "3.7.4"
 junit-platform-launcher = "1.11.4"
+jwt = "4.5.0"
 
 [libraries]
 dbDriver-pg = { group = "org.postgresql", name = "postgresql", version.ref = "postgres" }
+jwt-core = { group = "com.auth0", name = "java-jwt", version.ref = "jwt" }
 hikari-core = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
-devkit-bom = { group = "com.onixbyte", name = "devkit-bom", version.ref = "devkit" }
-devkit-core = { group = "com.onixbyte", name = "devkit-core", version.ref = "devkit" }
-devkit-utils = { group = "com.onixbyte", name = "devkit-utils", version.ref = "devkit" }
-devkit-guid = { group = "com.onixbyte", name = "guid", version.ref = "devkit" }
-devkit-simpleJwt-facade = { group = "com.onixbyte", name = "simple-jwt-facade", version.ref = "devkit" }
-devkit-simpleJwt-auth0 = { group = "com.onixbyte", name = "simple-jwt-authzero", version.ref = "devkit" }
-devkit-simpleJwt-starter = { group = "com.onixbyte", name = "simple-jwt-spring-boot-starter", version.ref = "devkit" }
+onixbyte-versionCatalogue = { group = "com.onixbyte", name = "version-catalogue", version.ref = "onixbyteToolbox" }
+onixbyte-commonToolbox = { group = "com.onixbyte", name = "common-toolbox", version.ref = "onixbyteToolbox" }
+onixbyte-identityGenerator = { group = "com.onixbyte", name = "identity-generator", version.ref = "onixbyteToolbox" }
 mybatisFlex-starter = { group = "com.mybatis-flex", name = "mybatis-flex-spring-boot3-starter", version.ref = "mybatisFlex" }
 springBoot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "springBoot" }
 springBoot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux", version.ref = "springBoot" }

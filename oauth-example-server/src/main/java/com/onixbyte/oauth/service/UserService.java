@@ -1,6 +1,6 @@
 package com.onixbyte.oauth.service;
 
-import com.onixbyte.guid.GuidCreator;
+import com.onixbyte.identitygenerator.IdentityGenerator;
 import com.onixbyte.oauth.data.persistent.User;
 import com.onixbyte.oauth.data.persistent.table.UserTableDef;
 import com.onixbyte.oauth.exception.BizException;
@@ -17,12 +17,12 @@ public class UserService {
 
     private final PasswordProcessorManager passwordProcessorManager;
     private final UserRepository userRepository;
-    private final GuidCreator<Long> userGuidCreator;
+    private final IdentityGenerator<Long> userGuidCreator;
 
     public UserService(
             PasswordProcessorManager passwordProcessorManager,
             UserRepository userRepository,
-            GuidCreator<Long> userGuidCreator
+            IdentityGenerator<Long> userGuidCreator
     ) {
         this.passwordProcessorManager = passwordProcessorManager;
         this.userRepository = userRepository;

@@ -2,7 +2,7 @@ package com.onixbyte.oauth.data.persistent;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
-import com.onixbyte.devkit.utils.BoolUtil;
+import com.onixbyte.common.util.BoolUtil;
 import com.onixbyte.oauth.data.persistent.table.UserTableDef;
 import com.onixbyte.oauth.data.response.UserResponse;
 

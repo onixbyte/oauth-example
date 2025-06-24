@@ -1,7 +1,7 @@
 package com.onixbyte.oauth.config;
 
-import com.onixbyte.guid.GuidCreator;
-import com.onixbyte.guid.impl.SnowflakeGuidCreator;
+import com.onixbyte.identitygenerator.IdentityGenerator;
+import com.onixbyte.identitygenerator.impl.SnowflakeIdentityGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class GuidConfig {
 
     @Bean
-    public GuidCreator<Long> userGuidCreator() {
-        return new SnowflakeGuidCreator(0x0, 0x0);
+    public IdentityGenerator<Long> userGuidCreator() {
+        return new SnowflakeIdentityGenerator(0x0, 0x0);
     }
 }
