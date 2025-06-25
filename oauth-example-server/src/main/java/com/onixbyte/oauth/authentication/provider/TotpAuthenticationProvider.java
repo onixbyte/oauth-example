@@ -23,22 +23,20 @@ public class TotpAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        if (authentication instanceof TotpToken token) {
-            var user = userService.getUserById(token.getPrincipal());
-            if (!user.totpEnabled()) {
-                throw new BizException(HttpStatus.CONFLICT, "You haven't enable TOTP yet.");
-            }
-
-            var totp = otpService.generateTotp(user.getTotpSecret());
-            if (!totp.equals(token.getCredentials())) {
-                throw new BizException(HttpStatus.UNAUTHORIZED, "TOTP incorrect.");
-            }
-
-            token.setAuthenticated(true);
-            token.setDetails(user);
-            return token;
+        var token = (TotpToken) authentication;
+        var user = userService.getUserById(token.getPrincipal());
+        if (!user.totpEnabled()) {
+            throw new BizException(HttpStatus.CONFLICT, "You haven't enable TOTP yet.");
         }
-        return null;
+
+        var totp = otpService.generateTotp(user.getTotpSecret());
+        if (!totp.equals(token.getCredentials())) {
+            throw new BizException(HttpStatus.UNAUTHORIZED, "TOTP incorrect.");
+        }
+
+        token.setAuthenticated(true);
+        token.setDetails(user);
+        return token;
     }
 
     @Override
