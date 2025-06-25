@@ -23,6 +23,7 @@ springBoot-starter-web = { group = "org.springframework.boot", name = "spring-bo
 springBoot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux", version.ref = "springBoot" }
 springBoot-starter-redis = { group = "org.springframework.boot", name = "spring-boot-starter-data-redis", version.ref = "springBoot" }
 springBoot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "springBoot" }
+springBoot-starter-oauth2-client = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-client", version.ref = "springBoot"}
 springBoot-core-configurationProcessor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor", version.ref = "springBoot" }
 commons-codec = { group = "commons-codec", name = "commons-codec", version.ref = "commons-codec" }
 test-reactor = { group = "io.projectreactor", name = "reactor-test", version.ref = "reactor" }
