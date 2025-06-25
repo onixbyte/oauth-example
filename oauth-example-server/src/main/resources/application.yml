@@ -9,15 +9,12 @@ mybatis-flex:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
-onixbyte:
-  simple-jwt:
-    issuer: https://oauth.onixbyte.com/
-    secret: 12345678901234567890123456789012
-
 app:
   auth:
     totp:
       time-step: 30s
       digits: 6
       totp-algorithm: hmac_sha_1
-
+    token:
+      issuer: https://oauth.onixbyte.com/
+      secret: 12345678901234567890123456789012
