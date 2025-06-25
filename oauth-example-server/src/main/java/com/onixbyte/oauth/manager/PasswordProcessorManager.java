@@ -1,6 +1,6 @@
 package com.onixbyte.oauth.manager;
 
-import com.onixbyte.oauth.model.table.User;
+import com.onixbyte.oauth.model.User;
 import com.onixbyte.oauth.processor.password.PasswordProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

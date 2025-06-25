@@ -1,7 +1,7 @@
 package com.onixbyte.oauth.repository;
 
 import com.mybatisflex.core.BaseMapper;
-import com.onixbyte.oauth.model.table.User;
+import com.onixbyte.oauth.model.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
