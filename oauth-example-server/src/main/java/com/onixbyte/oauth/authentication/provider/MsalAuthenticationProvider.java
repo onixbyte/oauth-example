@@ -43,7 +43,7 @@ public class MsalAuthenticationProvider implements AuthenticationProvider {
         var decodedToken = JWT.decode(token.getPrincipal());
         var keyId = decodedToken.getKeyId();
         if (keyId == null) {
-            throw new BizException(HttpStatus.BAD_REQUEST, "Token header missing key id.");
+            throw new BizException(HttpStatus.BAD_REQUEST, "Missing key id.");
         }
 
         try {

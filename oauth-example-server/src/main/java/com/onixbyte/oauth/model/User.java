@@ -4,7 +4,7 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import com.onixbyte.common.util.BoolUtil;
 import com.onixbyte.oauth.model.table.UserTableDef;
-import com.onixbyte.oauth.data.response.UserResponse;
+import com.onixbyte.oauth.entity.response.UserResponse;
 
 import java.util.Objects;
 

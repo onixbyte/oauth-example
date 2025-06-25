@@ -1,4 +1,4 @@
-package com.onixbyte.oauth.data.response;
+package com.onixbyte.oauth.entity.response;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

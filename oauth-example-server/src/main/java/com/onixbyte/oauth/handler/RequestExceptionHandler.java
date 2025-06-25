@@ -1,7 +1,7 @@
 package com.onixbyte.oauth.handler;
 
-import com.onixbyte.oauth.data.response.BizExceptionResponse;
-import com.onixbyte.oauth.data.response.TotpRequiredResponse;
+import com.onixbyte.oauth.entity.response.BizExceptionResponse;
+import com.onixbyte.oauth.entity.response.TotpRequiredResponse;
 import com.onixbyte.oauth.exception.BizException;
 import com.onixbyte.oauth.exception.TotpRequiredException;
 import org.springframework.http.ResponseEntity;

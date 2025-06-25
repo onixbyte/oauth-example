@@ -1,4 +1,4 @@
-package com.onixbyte.oauth.data.request;
+package com.onixbyte.oauth.entity.request;
 
 public record NormalAuthenticationRequest(
         String username,

@@ -1,7 +1,6 @@
 package com.onixbyte.oauth.exception;
 
-import com.onixbyte.oauth.data.response.BaseResponse;
-import com.onixbyte.oauth.data.response.BizExceptionResponse;
+import com.onixbyte.oauth.entity.response.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

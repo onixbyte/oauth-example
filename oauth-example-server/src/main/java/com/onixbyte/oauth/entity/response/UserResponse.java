@@ -1,4 +1,4 @@
-package com.onixbyte.oauth.data.response;
+package com.onixbyte.oauth.entity.response;
 
 public record UserResponse(
         String id,

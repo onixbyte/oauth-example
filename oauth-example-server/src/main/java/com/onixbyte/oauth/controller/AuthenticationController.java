@@ -1,13 +1,12 @@
 package com.onixbyte.oauth.controller;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.onixbyte.oauth.authentication.token.MsalToken;
 import com.onixbyte.oauth.authentication.token.TotpToken;
 import com.onixbyte.oauth.authentication.token.UsernamePasswordToken;
-import com.onixbyte.oauth.data.request.MsalAuthenticationRequest;
-import com.onixbyte.oauth.data.request.NormalAuthenticationRequest;
-import com.onixbyte.oauth.data.request.TotpAuthenticationRequest;
-import com.onixbyte.oauth.data.response.UserResponse;
+import com.onixbyte.oauth.entity.request.MsalAuthenticationRequest;
+import com.onixbyte.oauth.entity.request.NormalAuthenticationRequest;
+import com.onixbyte.oauth.entity.request.TotpAuthenticationRequest;
+import com.onixbyte.oauth.entity.response.UserResponse;
 import com.onixbyte.oauth.exception.BizException;
 import com.onixbyte.oauth.service.TokenService;
 import org.slf4j.Logger;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/authentication")
