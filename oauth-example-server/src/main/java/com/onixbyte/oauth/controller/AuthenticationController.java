@@ -97,10 +97,4 @@ public class AuthenticationController {
                 .header("Authorization", token)
                 .body(user.asResponse());
     }
-
-    @GetMapping("/github")
-    public ResponseEntity<?> loginSuccess(@AuthenticationPrincipal OAuth2User oauth2User) {
-        var userAttributes = oauth2User.getAttributes();
-        return ResponseEntity.ok(userAttributes);
-    }
 }
