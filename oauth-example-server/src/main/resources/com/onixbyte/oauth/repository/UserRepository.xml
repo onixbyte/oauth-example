@@ -13,7 +13,7 @@
         </where>
     </select>
 
-    <select id="getUserByMsalOpenId" resultType="com.onixbyte.oauth.data.persistent.User">
+    <select id="getUserByMsalOpenId" resultType="com.onixbyte.oauth.model.table.User">
         SELECT *
         FROM users
         WHERE msal_open_id = #{msalOpenId}

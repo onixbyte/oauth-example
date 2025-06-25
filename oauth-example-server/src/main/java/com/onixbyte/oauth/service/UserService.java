@@ -1,8 +1,7 @@
 package com.onixbyte.oauth.service;
 
 import com.onixbyte.identitygenerator.IdentityGenerator;
-import com.onixbyte.oauth.data.persistent.User;
-import com.onixbyte.oauth.data.persistent.table.UserTableDef;
+import com.onixbyte.oauth.model.table.User;
 import com.onixbyte.oauth.exception.BizException;
 import com.onixbyte.oauth.exception.PropertyMissingException;
 import com.onixbyte.oauth.manager.PasswordProcessorManager;

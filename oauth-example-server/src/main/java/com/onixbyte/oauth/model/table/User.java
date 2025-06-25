@@ -1,9 +1,9 @@
-package com.onixbyte.oauth.data.persistent;
+package com.onixbyte.oauth.model.table;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import com.onixbyte.common.util.BoolUtil;
-import com.onixbyte.oauth.data.persistent.table.UserTableDef;
+import com.onixbyte.oauth.model.table.table.UserTableDef;
 import com.onixbyte.oauth.data.response.UserResponse;
 
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package com.onixbyte.oauth.authentication.token;
 
-import com.onixbyte.oauth.data.persistent.User;
+import com.onixbyte.oauth.model.table.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 

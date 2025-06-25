@@ -1,6 +1,6 @@
 package com.onixbyte.oauth.processor.password;
 
-import com.onixbyte.oauth.data.persistent.User;
+import com.onixbyte.oauth.model.table.User;
 
 /**
  * Defines a contract for processing a user's password according to a specific authentication method or condition.

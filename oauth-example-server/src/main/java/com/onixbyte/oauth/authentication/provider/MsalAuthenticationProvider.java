@@ -3,7 +3,7 @@ package com.onixbyte.oauth.authentication.provider;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.onixbyte.oauth.authentication.token.MsalToken;
-import com.onixbyte.oauth.data.persistent.User;
+import com.onixbyte.oauth.model.table.User;
 import com.onixbyte.oauth.exception.BizException;
 import com.onixbyte.oauth.service.MsalService;
 import com.onixbyte.oauth.service.UserService;

@@ -1,4 +1,4 @@
-package com.onixbyte.oauth.data.persistent.table;
+package com.onixbyte.oauth.model.table.table;
 
 import com.mybatisflex.core.query.QueryColumn;
 import com.mybatisflex.core.table.TableDef;
